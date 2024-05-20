@@ -1,0 +1,11 @@
+.sidebar {
+    height: 100%;
+    position: fixed;
+    right: 0;
+    top: 0;
+    background-color: white;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+    transition: width 0.5s, padding 0.5s;
+    z-index: 1001; /* Make sure it's above other content */
+    overflow-x: hidden; /* Hide content when sidebar is closed */
+}

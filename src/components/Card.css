@@ -1,0 +1,16 @@
+.card {
+    width: 350px;  /* Adjust size as necessary */
+    height: 250px; /* Adjust size as necessary */
+    margin: 15px;  /* Space between cards */
+    display: inline-block; /* Align cards in a row */
+    cursor: pointer; /* Indicates that the card is clickable */
+    border-radius: 10px; /* Rounded corners for a modern look */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+  }
+  
+  .card:hover {
+    transform: translateY(-5px); /* Lift card on hover */
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15); /* Increase shadow on hover */
+  }
+  
