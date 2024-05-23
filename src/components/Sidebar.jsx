@@ -1,20 +1,31 @@
 import React from 'react';
-import './Sidebar.css'
+import './Sidebar.css';
 
 const Sidebar = ({ isOpen, close, event }) => {
-    if (!isOpen) return null;
+    if (!event) return null;
 
     return (
-        <div className="sidebar" style={{ width: isOpen ? '250px' : '0', padding: isOpen ? '20px' : '0' }}>
-            <h2>Event Details</h2>
-            <button onClick={close}>Close</button>
-            <p><strong>Event Number:</strong> {event.eventNumber}</p>
-            <p><strong>Description:</strong> {event.description}</p>
-            <p><strong>Signs Count:</strong> {event.signsCount}</p>
-            <p><strong>Posted Date:</strong> {event.postedDate}</p>
-            <p><strong>Pickup Date:</strong> {event.pickupDate}</p>
+        <div className={`sidebar ${isOpen ? 'open' : ''}`}>
+            <button className="close-btn" onClick={close}>X</button>
+            <h2>{event.eventNumber}</h2>
+            <p>{event.description}</p>
+            
+            <h3>Map Images</h3>
+            <div className="image-grid">
+                {event.mapImages && event.mapImages.map((url, index) => (
+                    <img key={index} src={url} alt={`Map ${index + 1}`} />
+                ))}
+            </div>
+
+            <h3>Sign Images</h3>
+            <div className="image-grid">
+                {event.signImages && event.signImages.map((url, index) => (
+                    <img key={index} src={url} alt={`Sign ${index + 1}`} />
+                ))}
+            </div>
         </div>
     );
 };
 
 export default Sidebar;
+

@@ -1,11 +1,38 @@
 .sidebar {
-    height: 100%;
     position: fixed;
-    right: 0;
+    right: -300px;
     top: 0;
-    background-color: white;
+    height: 100%;
+    width: 300px;
+    background: white;
     box-shadow: -2px 0 5px rgba(0,0,0,0.5);
-    transition: width 0.5s, padding 0.5s;
-    z-index: 1001; /* Make sure it's above other content */
-    overflow-x: hidden; /* Hide content when sidebar is closed */
+    transition: right 0.3s;
+    padding: 20px;
+    overflow-y: auto;
+    z-index: 1001;
+}
+
+.sidebar.open {
+    right: 0;
+}
+
+.close-btn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    float: right;
+}
+
+.image-grid {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.image-grid img {
+    width: 300px;
+    height: 300px;
+    margin: 5px;
+    object-fit: cover;
 }
