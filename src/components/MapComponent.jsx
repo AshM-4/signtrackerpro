@@ -47,7 +47,11 @@ const MapComponent = () => {
             const querySnapshot = await getDocs(collection(db, "lots"));
             const fetchedLots = [];
             querySnapshot.forEach((doc) => {
-                fetchedLots.push({ id: doc.id, ...doc.data() });
+                const lotData = doc.data();
+                const lotNumber = lotData.number;
+                const eventsWithLotNumber = lotData.events.map(event => ({ ...event, lotNumber }));
+                fetchedLots.push({ id: doc.id, ...lotData, events: eventsWithLotNumber });
+                // console.log('Document ID:', doc.id);
             });
             setLots(fetchedLots);
         };
@@ -72,11 +76,14 @@ const MapComponent = () => {
 
     const openSidebar = (event) => {
         setSelectedEvent(event);
+        // const selected = { event };
+        // console.log('Selected Event:', selected);
         setSidebarOpen(true);
     };
 
     const closeSidebar = () => {
         setSidebarOpen(false);
+        setSelectedEvent(null);
     };
 
     const markers = [
@@ -140,7 +147,7 @@ const MapComponent = () => {
                                         </thead>
                                         <tbody>
                                             {lot.events.filter(event => isToday(parseISO(event.pickupDate))).map((event, index) => (
-                                                <tr key={index} onClick={() => openSidebar(event)}>
+                                                <tr key={index} onClick={() => openSidebar({ ...event, lotId: lot.id })}>
                                                     <td>{event.eventNumber}</td>
                                                     <td>{event.signsCount}</td>
                                                     <td>{event.postedDate}</td>

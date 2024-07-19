@@ -3,7 +3,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { doc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { db, storage } from './firebaseConfig';
 
-const UploadImage = ({ lotId, eventNumber }) => {
+const UploadImage = ({ lotId, docId, eventNumber, imageType, docType }) => {
     const [file, setFile] = useState(null);
 
     const handleFileChange = (e) => {
@@ -14,13 +14,15 @@ const UploadImage = ({ lotId, eventNumber }) => {
 
     const handleUpload = async () => {
         if (file) {
-            const storageRef = ref(storage, `events/${lotId}/${eventNumber}/${file.name}`);
+            const storageRef = ref(storage, `events/${lotId}/${eventNumber}/${imageType}/${file.name}`);
             await uploadBytes(storageRef, file);
             const downloadURL = await getDownloadURL(storageRef);
 
-            const eventDocRef = doc(db, 'lots', lotId);
+            const eventDocRef = doc(db, 'lots', docId);
+            const updateField = `events.${eventNumber}.${docType}`;
+            
             await updateDoc(eventDocRef, {
-                [`events.${eventNumber}.images`]: arrayUnion(downloadURL)
+                [updateField]: arrayUnion(downloadURL)
             });
 
             alert('File uploaded successfully');
